@@ -740,7 +740,7 @@ body {
 .mobile-cart-btn {
     display: none;
     position: fixed;
-    bottom:160px;
+    bottom: 140px;
     right: 20px;
     width: 60px;
     height: 60px;
@@ -841,7 +841,7 @@ body {
         grid-template-columns: 1fr;
         gap: 20px;
         padding: 20px 10px;
-        padding-bottom: 100px;
+        padding-bottom: 140px;
     }
     
     .cart-sidebar {
@@ -852,31 +852,68 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
+        bottom: 140px;
     }
     
     .products-section {
-        padding: 20px;
+        padding: 15px;
     }
     
     .product-card {
-        flex-direction: column;
-        gap: 15px;
-        min-height: auto;
+        flex-direction: row;
+        gap: 12px;
+        min-height: 100px;
+        padding: 12px;
+        margin-bottom: 12px;
     }
     
     .product-image {
-        width: 100%;
-        height: 180px;
+        width: 80px;
+        height: 80px;
+        flex-shrink: 0;
+    }
+    
+    .product-header h3 {
+        font-size: 1.1em;
+        margin-bottom: 4px;
+        line-height: 1.2;
+    }
+    
+    .product-description {
+        font-size: 0.8em;
+        line-height: 1.2;
+        margin-bottom: 8px;
+        -webkit-line-clamp: 2;
     }
     
     .product-footer {
         flex-direction: column;
-        gap: 15px;
+        gap: 8px;
         align-items: stretch;
     }
     
     .product-sizes {
-        justify-content: center;
+        justify-content: flex-start;
+        gap: 6px;
+    }
+    
+    .size-option {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+    
+    .size-label {
+        font-size: 0.7em;
+    }
+    
+    .size-price {
+        font-size: 0.9em;
+    }
+    
+    .add-to-cart {
+        padding: 6px 12px;
+        font-size: 0.8em;
+        border-radius: 15px;
     }
     
     .nav-content {
@@ -886,6 +923,11 @@ body {
     .nav-item {
         font-size: 0.9em;
         padding: 10px 15px;
+    }
+    
+    .category-title {
+        font-size: 1.8em;
+        margin-bottom: 15px;
     }
     
     .modal-content {
