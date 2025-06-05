@@ -669,77 +669,6 @@ body {
     box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
 }
 
-@media (max-width: 768px) {
-    .header-content {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-    
-    .main-content {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 20px 10px;
-    }
-    
-    .products-section {
-        padding: 20px;
-    }
-    
-    .product-card {
-        flex-direction: column;
-        gap: 15px;
-        min-height: auto;
-    }
-    
-    .product-image {
-        width: 100%;
-        height: 180px;
-    }
-    
-    .product-footer {
-        flex-direction: column;
-        gap: 15px;
-        align-items: stretch;
-    }
-    
-    .product-sizes {
-        justify-content: center;
-    }
-    
-    .nav-content {
-        padding: 0 10px;
-    }
-    
-    .nav-item {
-        font-size: 0.9em;
-        padding: 10px 15px;
-    }
-    
-    .modal-content {
-        margin: 10px;
-        max-height: 85vh;
-    }
-    
-    .modal-body {
-        padding: 20px;
-    }
-    
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-    
-    .notification {
-        top: 10px;
-        right: 10px;
-        left: 10px;
-        transform: translateY(-120%);
-    }
-    
-    .notification.show {
-        transform: translateY(0);
-    }
-}
 .demo-banner {
     position: fixed;
     bottom: 0;
@@ -807,12 +736,185 @@ body {
     letter-spacing: 0.5px;
 }
 
+/* Floating Cart Button for Mobile */
+.mobile-cart-btn {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+    z-index: 200;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.5em;
+}
 
+.mobile-cart-btn:hover {
+    transform: scale(1.1);
+    background: var(--primary-dark);
+}
 
+.mobile-cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--danger);
+    color: var(--white);
+    font-size: 0.7em;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 15px;
+    min-width: 20px;
+    text-align: center;
+    border: 2px solid var(--white);
+    display: none;
+}
+
+.mobile-cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100vh;
+    background: var(--white);
+    z-index: 300;
+    transition: right 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.mobile-cart-sidebar.open {
+    right: 0;
+}
+
+.mobile-cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: var(--primary-color);
+    color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.mobile-cart-close {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.mobile-cart-content {
+    flex: 1;
+    padding: 20px;
+    padding-bottom: 100px;
+}
+
+@media (max-width: 768px) {
+    .header {
+        position: relative;
+    }
+    
+    .nav-categories {
+        position: relative;
+        top: 0;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px 10px;
+        padding-bottom: 100px;
+    }
+    
+    .cart-sidebar {
+        display: none;
+    }
+    
+    .mobile-cart-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .products-section {
+        padding: 20px;
+    }
+    
+    .product-card {
+        flex-direction: column;
+        gap: 15px;
+        min-height: auto;
+    }
+    
+    .product-image {
+        width: 100%;
+        height: 180px;
+    }
+    
+    .product-footer {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .product-sizes {
+        justify-content: center;
+    }
+    
+    .nav-content {
+        padding: 0 10px;
+    }
+    
+    .nav-item {
+        font-size: 0.9em;
+        padding: 10px 15px;
+    }
+    
+    .modal-content {
+        margin: 10px;
+        max-height: 85vh;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        transform: translateY(-120%);
+    }
+    
+    .notification.show {
+        transform: translateY(0);
+    }
+}
 </style>
 </head>
 <body>
-
 
 <div class="header">
 <div class="header-content">
@@ -915,9 +1017,56 @@ body {
 </div>
 </div>
 
+<!-- Mobile Cart Button -->
+<button class="mobile-cart-btn" id="mobileCartBtn">
+    🛒
+    <span class="mobile-cart-count" id="mobileCartCount">0</span>
+</button>
+
+<!-- Mobile Cart Sidebar -->
+<div class="mobile-cart-sidebar" id="mobileCartSidebar">
+    <div class="mobile-cart-header">
+        <h3>Seu Pedido</h3>
+        <button class="mobile-cart-close" id="mobileCartClose">&times;</button>
+    </div>
+    
+    <div class="mobile-cart-content">
+        <div class="cart-items" id="mobileCartItems">
+            <div class="empty-cart">
+                <div class="empty-cart-icon">🛒</div>
+                <p>Seu carrinho está vazio</p>
+                <small>Adicione alguns itens deliciosos!</small>
+            </div>
+        </div>
+        
+        <div class="cart-summary" id="mobileCartSummary" style="display: none;">
+            <div class="summary-line">
+                <span>Subtotal:</span>
+                <span id="mobileSubtotal">R$ 0,00</span>
+            </div>
+            <div class="summary-line">
+                <span>Taxa de Entrega:</span>
+                <span>R$ 10,00</span>
+            </div>
+            <div class="summary-line summary-total">
+                <span>Total:</span>
+                <span id="mobileTotal">R$ 10,00</span>
+            </div>
+            
+            <button class="checkout-btn" id="mobileCheckoutBtn" disabled>
+                Finalizar Pedido
+            </button>
+        </div>
+        
+        <div class="demo-badge" onclick="window.open('https://maximiza.ai', '_blank')">
+            <h4>🚀 PROJETO DEMONSTRATIVO</h4>
+            <p>Quer um site assim no seu bar ou restaurante?</p>
+            <div class="cta-text">👆 Clique aqui - maximiza.AI</div>
+        </div>
+    </div>
+</div>
+
 <div class="notification" id="notification"></div>
-
-
 
 <!-- MODAL CHECKOUT -->
 <div class="modal-overlay" id="checkoutModal">
@@ -1509,21 +1658,21 @@ function setupProductEvents(card, product) {
     let selectedPrice = null;
     
     sizeOptions.forEach(option => {
-    option.addEventListener('click', function() {
-        // Verificar se está aberto PRIMEIRO
-        if (!isRestaurantOpen()) {
-            showNotification('Restaurante fechado! Horário de funcionamento: 18h às 23h', 'error');
-            return;
-        }
-        
-        sizeOptions.forEach(opt => opt.classList.remove('selected'));
-        this.classList.add('selected');
-        selectedSize = this.dataset.size;
-        selectedPrice = parseFloat(this.dataset.price);
-        addButton.disabled = false;
-        addButton.classList.add('active');
+        option.addEventListener('click', function() {
+            // Verificar se está aberto PRIMEIRO
+            if (!isRestaurantOpen()) {
+                showNotification('Restaurante fechado! Horário de funcionamento: 18h às 23h', 'error');
+                return;
+            }
+            
+            sizeOptions.forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+            selectedSize = this.dataset.size;
+            selectedPrice = parseFloat(this.dataset.price);
+            addButton.disabled = false;
+            addButton.classList.add('active');
+        });
     });
-});
     
     addButton.addEventListener('click', function() {
         if (selectedSize && selectedPrice) {
@@ -1535,6 +1684,37 @@ function setupProductEvents(card, product) {
             selectedPrice = null;
         }
     });
+}
+
+// CONFIGURAR EVENTOS DO CARRINHO MOBILE
+function setupMobileCartEvents() {
+    const mobileCartBtn = document.getElementById('mobileCartBtn');
+    const mobileCartSidebar = document.getElementById('mobileCartSidebar');
+    const mobileCartClose = document.getElementById('mobileCartClose');
+    
+    if (mobileCartBtn) {
+        mobileCartBtn.addEventListener('click', function() {
+            mobileCartSidebar.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        });
+    }
+    
+    if (mobileCartClose) {
+        mobileCartClose.addEventListener('click', function() {
+            mobileCartSidebar.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        });
+    }
+    
+    // Fechar ao clicar fora (opcional)
+    if (mobileCartSidebar) {
+        mobileCartSidebar.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('open');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
 }
 
 // CONFIGURAR EVENTOS GLOBAIS
@@ -1549,11 +1729,20 @@ function setupEvents() {
         });
     });
     
-    // Checkout
+    // Checkout - Desktop
     const checkoutBtn = document.getElementById('checkoutBtn');
     if (checkoutBtn) {
         checkoutBtn.addEventListener('click', openCheckoutModal);
     }
+    
+    // Checkout - Mobile
+    const mobileCheckoutBtn = document.getElementById('mobileCheckoutBtn');
+    if (mobileCheckoutBtn) {
+        mobileCheckoutBtn.addEventListener('click', openCheckoutModal);
+    }
+    
+    // Mobile Cart Events
+    setupMobileCartEvents();
     
     // Modal
     const closeModal = document.getElementById('closeModal');
@@ -1716,43 +1905,74 @@ function updateCartUI() {
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const total = subtotal + CONFIG.DELIVERY_FEE;
     
+    // Atualizar contador desktop
     document.getElementById('cartCount').textContent = totalItems;
+    
+    // Atualizar contador mobile
+    const mobileCartCount = document.getElementById('mobileCartCount');
+    if (mobileCartCount) {
+        mobileCartCount.textContent = totalItems;
+        mobileCartCount.style.display = totalItems > 0 ? 'block' : 'none';
+    }
     
     const cartItems = document.getElementById('cartItems');
     const cartSummary = document.getElementById('cartSummary');
+    const mobileCartItems = document.getElementById('mobileCartItems');
+    const mobileCartSummary = document.getElementById('mobileCartSummary');
+    
+    const cartHTML = cart.length === 0 ? `
+        <div class="empty-cart">
+            <div class="empty-cart-icon">🛒</div>
+            <p>Seu carrinho está vazio</p>
+            <small>Adicione alguns itens deliciosos!</small>
+        </div>
+    ` : cart.map(item => `
+        <div class="cart-item">
+            <div class="cart-item-info">
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-size">${item.size} - R$ ${item.price.toFixed(2)}</div>
+            </div>
+            <div class="cart-item-controls">
+                <button class="quantity-btn" onclick="updateQuantity('${item.id}', '${item.size}', -1)">-</button>
+                <span>${item.quantity}</span>
+                <button class="quantity-btn" onclick="updateQuantity('${item.id}', '${item.size}', 1)">+</button>
+            </div>
+        </div>
+    `).join('');
+    
+    if (cartItems) cartItems.innerHTML = cartHTML;
+    if (mobileCartItems) mobileCartItems.innerHTML = cartHTML;
     
     if (cart.length === 0) {
-        cartItems.innerHTML = `
-            <div class="empty-cart">
-                <div class="empty-cart-icon">🛒</div>
-                <p>Seu carrinho está vazio</p>
-                <small>Adicione alguns itens deliciosos!</small>
-            </div>
-        `;
-        cartSummary.style.display = 'none';
+        if (cartSummary) cartSummary.style.display = 'none';
+        if (mobileCartSummary) mobileCartSummary.style.display = 'none';
     } else {
-        cartItems.innerHTML = cart.map(item => `
-            <div class="cart-item">
-                <div class="cart-item-info">
-                    <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-size">${item.size} - R$ ${item.price.toFixed(2)}</div>
-                </div>
-                <div class="cart-item-controls">
-                    <button class="quantity-btn" onclick="updateQuantity('${item.id}', '${item.size}', -1)">-</button>
-                    <span>${item.quantity}</span>
-                    <button class="quantity-btn" onclick="updateQuantity('${item.id}', '${item.size}', 1)">+</button>
-                </div>
-            </div>
-        `).join('');
+        if (cartSummary) cartSummary.style.display = 'block';
+        if (mobileCartSummary) mobileCartSummary.style.display = 'block';
         
-        cartSummary.style.display = 'block';
-        document.getElementById('subtotal').textContent = `R$ ${subtotal.toFixed(2)}`;
-        document.getElementById('total').textContent = `R$ ${total.toFixed(2)}`;
+        // Atualizar valores desktop
+        const subtotalEl = document.getElementById('subtotal');
+        const totalEl = document.getElementById('total');
+        if (subtotalEl) subtotalEl.textContent = `R$ ${subtotal.toFixed(2)}`;
+        if (totalEl) totalEl.textContent = `R$ ${total.toFixed(2)}`;
         
+        // Atualizar valores mobile
+        const mobileSubtotalEl = document.getElementById('mobileSubtotal');
+        const mobileTotalEl = document.getElementById('mobileTotal');
+        if (mobileSubtotalEl) mobileSubtotalEl.textContent = `R$ ${subtotal.toFixed(2)}`;
+        if (mobileTotalEl) mobileTotalEl.textContent = `R$ ${total.toFixed(2)}`;
+        
+        // Habilitar botões de checkout se estiver aberto
         if (isRestaurantOpen()) {
-            document.getElementById('checkoutBtn').disabled = false;
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const mobileCheckoutBtn = document.getElementById('mobileCheckoutBtn');
+            if (checkoutBtn) checkoutBtn.disabled = false;
+            if (mobileCheckoutBtn) mobileCheckoutBtn.disabled = false;
         } else {
-            document.getElementById('checkoutBtn').disabled = true;
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const mobileCheckoutBtn = document.getElementById('mobileCheckoutBtn');
+            if (checkoutBtn) checkoutBtn.disabled = true;
+            if (mobileCheckoutBtn) mobileCheckoutBtn.disabled = true;
         }
     }
 }
@@ -1978,6 +2198,7 @@ function sendWhatsAppMessage(message) {
 window.updateQuantity = updateQuantity;
 window.addToCart = addToCart;
 </script>
+
 <div class="demo-banner">
     🚀 <strong>PROJETO DEMONSTRATIVO</strong> - Desenvolvido pela <a href="https://maximiza.ai" target="_blank">maximiza.AI</a> para showcases de sistemas para bares e restaurantes. Clique <a href="https://maximiza.ai" target="_blank">AQUI</a> e acesse nosso site.
 </div>
