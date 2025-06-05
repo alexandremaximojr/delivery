@@ -1,987 +1,1986 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio Premium - Pizzaria Bella Vista</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedidos Online - Bella Vista</title>
+
+<!-- Favicon SVG Inline -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23d4af37'/><circle cx='16' cy='16' r='12' fill='%23fff'/><circle cx='16' cy='16' r='10' fill='%23d4af37'/><text x='16' y='22' text-anchor='middle' fill='%23fff' font-family='serif' font-size='14' font-weight='bold'>B</text></svg>" type="image/svg+xml">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --primary-color: #d4af37;
+    --primary-dark: #b8941f;
+    --secondary-color: #1a1a1a;
+    --accent-color: #f4e4bc;
+    --background: #fafafa;
+    --white: #ffffff;
+    --text-dark: #1a1a1a;
+    --text-light: #666;
+    --success: #28a745;
+    --danger: #dc3545;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--background);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, #2d2d2d 100%);
+    color: var(--white);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logo p {
+    font-size: 0.9em;
+    opacity: 0.8;
+    margin-top: 5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.header-info {
+    text-align: right;
+    font-size: 0.9em;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--success);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.nav-categories {
+    background: var(--white);
+    padding: 20px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 90px;
+    z-index: 90;
+    overflow: hidden;
+}
+
+.nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+}
+
+.nav-item {
+    padding: 12px 20px;
+    background: var(--background);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    font-weight: 500;
+    border: 2px solid transparent;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background: var(--primary-color);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 30px;
+}
+
+.products-section {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+}
+
+.category-section {
+    margin-bottom: 50px;
+}
+
+.category-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.category-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+}
+
+.products-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.product-card {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #f0f0f0;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-height: 140px;
+}
+
+.product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-color: var(--primary-color);
+}
+
+.product-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--background);
+    flex-shrink: 0;
+}
+
+.product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+}
+
+.product-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    line-height: 1.3;
+    word-wrap: break-word;
+}
+
+.product-description {
+    color: var(--text-light);
+    font-size: 0.95em;
+    line-height: 1.4;
+    margin-bottom: 15px;
+    word-wrap: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.product-sizes {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.size-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 12px;
+    background: var(--background);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.size-option:hover {
+    border-color: var(--primary-color);
+}
+
+.size-option.selected {
+    background: var(--primary-color);
+    color: var(--white);
+    border-color: var(--primary-dark);
+}
+
+.size-label {
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.size-price {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.size-option.selected .size-price {
+    color: var(--white);
+}
+
+.add-to-cart {
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9em;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.add-to-cart.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.add-to-cart.active:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.cart-sidebar {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 150px;
+    height: fit-content;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.cart-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.cart-count {
+    background: var(--primary-color);
+    color: var(--white);
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+.cart-items {
+    margin-bottom: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.cart-item-size {
+    font-size: 0.8em;
+    color: var(--text-light);
+}
+
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quantity-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--primary-color);
+    background: var(--white);
+    color: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.quantity-btn:hover {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.cart-summary {
+    padding-top: 20px;
+    border-top: 2px solid var(--primary-color);
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.summary-total {
+    font-weight: 700;
+    font-size: 1.2em;
+    color: var(--primary-color);
+}
+
+.checkout-btn {
+    width: 100%;
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+.checkout-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.checkout-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-light);
+}
+
+.empty-cart-icon {
+    font-size: 3em;
+    margin-bottom: 15px;
+}
+
+/* MODAL CHECKOUT */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-content {
+    background: var(--white);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.modal-header {
+    padding: 25px;
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8em;
+    font-weight: 700;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+}
+
+.modal-body {
+    padding: 30px;
+}
+
+.form-section {
+    margin-bottom: 30px;
+}
+
+.form-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.payment-options {
+    display: grid;
+    gap: 15px;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid #f0f0f0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-option:hover {
+    border-color: var(--primary-color);
+}
+
+.payment-option.selected {
+    border-color: var(--primary-color);
+    background: rgba(212, 175, 55, 0.05);
+}
+
+.payment-option input[type="radio"] {
+    margin-right: 12px;
+}
+
+.payment-details {
+    display: none;
+    margin-top: 15px;
+    padding: 15px;
+    background: var(--background);
+    border-radius: 8px;
+}
+
+.order-summary {
+    background: var(--background);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.pix-info {
+    background: #e8f5e8;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid var(--success);
+}
+
+.pix-key {
+    font-family: monospace;
+    background: var(--white);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 10px 0;
+    font-weight: 600;
+}
+
+.submit-order {
+    width: 100%;
+    background: var(--success);
+    color: var(--white);
+    border: none;
+    padding: 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-order:hover {
+    background: #218838;
+    transform: translateY(-2px);
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--success);
+    color: var(--white);
+    padding: 15px 20px;
+    border-radius: 8px;
+    z-index: 9999;
+    transform: translateX(200%);
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 20px rgba(40, 167, 69, 0.3);
+    font-weight: 500;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.error {
+    background: var(--danger);
+    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
     
-    <!-- Favicon SVG Inline -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23d4af37'/><circle cx='16' cy='16' r='12' fill='%23fff'/><circle cx='16' cy='16' r='10' fill='%23d4af37'/><text x='16' y='22' text-anchor='middle' fill='%23fff' font-family='serif' font-size='14' font-weight='bold'>B</text></svg>" type="image/svg+xml">
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px 10px;
+    }
     
-    <!-- Fallback para navegadores mais antigos -->
-    <link rel="shortcut icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR/////8A////AP///wD///8A////AP///wD0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR/////8A////AP///wD0r0f/9K9H/////wD///8A////AP///wD///8A////AP///wD///8A////AP///wD0r0f/9K9H/////wD///8A9K9H//SvR//0r0f/////AP///wD///8A////AP///wD///8A////AP///wD///8A////APSvR//0r0f/9K9H/////wD0r0f/9K9H//SvR//0r0f/////AP///wD///8A////AP///wD///8A////AP///wD///8A9K9H//SvR//0r0f/9K9H/////wD0r0f/9K9H//SvR//0r0f/9K9H/////wD///8A////AP///wD///8A////AP///wD0r0f/9K9H//SvR//0r0f/9K9H/////wD0r0f/9K9H//SvR//0r0f/9K9H//SvR/////8A////AP///wD///8A////APSvR//0r0f/9K9H//SvR//0r0f/9K9H/////wD0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/////AP///wD///8A9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H/////wD0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR/////8A9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR/////wD0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR/////wD0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR/////wD///8A9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/////AP///wD///8A////APSvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H/////wD///8A////AP///wD///8A////AP///wD0r0f/9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H//SvR/////8A////AP///wD///8A////AP///wD///8A////AP///wD///8A9K9H//SvR//0r0f/9K9H//SvR//0r0f/9K9H/////wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD0r0f/9K9H//SvR/////8A////AP///wD///8A////AP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+    .products-section {
+        padding: 20px;
+    }
     
-    <!-- Meta tags adicionais para melhor SEO -->
-    <meta name="description" content="Cardápio Premium da Pizzaria Bella Vista - Culinária Italiana Artesanal com ingredientes premium importados da Itália">
-    <meta name="keywords" content="pizzaria, pizza artesanal, culinária italiana, delivery, Bella Vista">
-    <meta name="author" content="Bella Vista Pizzaria">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
-            color: #1a1a1a;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            width: 100vw;
-            margin: 0;
-            padding: 0;
-            background: #ffffff;
-            position: relative;
-            min-height: 100vh;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: #ffffff;
-            text-align: center;
-            padding: 80px 40px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 40%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
-        }
-        
-        .header-content {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .header h1 {
-            font-family: 'Playfair Display', serif;
-            margin: 0;
-            font-size: 4.5em;
-            font-weight: 900;
-            letter-spacing: -2px;
-            background: linear-gradient(135deg, #d4af37, #f4e4bc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 2px 20px rgba(212, 175, 55, 0.3);
-        }
-        
-        .header .tagline {
-            font-size: 1.1em;
-            margin: 20px 0 0 0;
-            opacity: 0.9;
-            font-weight: 300;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #d4af37;
-        }
-        
-        .menu-content {
-            padding: 40px 20px;
-            background: #fafafa;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        
-        .category {
-            margin-bottom: 50px;
-        }
-        
-        .category-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8em;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 15px;
-            text-align: center;
-            position: relative;
-            letter-spacing: -1px;
-        }
-        
-        .category-subtitle {
-            text-align: center;
-            color: #666;
-            font-style: italic;
-            margin-bottom: 35px;
-            font-size: 1.1em;
-            font-weight: 300;
-        }
-        
-        .category-title::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(135deg, #d4af37, #f4e4bc);
-            margin: 20px auto;
-            border-radius: 1px;
-        }
-        
-        .items-grid {
-            display: grid;
-            gap: 20px;
-        }
-        
-        .pizza-item {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.04);
-            border: 1px solid #f0f0f0;
-            transition: all 0.4s ease;
-            position: relative;
-        }
-        
-        .pizza-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            border-color: #d4af37;
-        }
-        
-        .pizza-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(135deg, #d4af37, #f4e4bc);
-            border-radius: 20px 20px 0 0;
-        }
-        
-        .pizza-header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        
-        .pizza-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2em;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 15px;
-            letter-spacing: -0.5px;
-        }
-        
-        .pizza-description {
-            color: #666;
-            font-size: 1.05em;
-            font-weight: 400;
-            line-height: 1.6;
-            max-width: 80%;
-            margin: 0 auto;
-        }
-        
-        .pizza-sizes {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-top: 30px;
-        }
-        
-        .size-option {
-            text-align: center;
-            padding: 25px 20px;
-            background: #f8f8f8;
-            border-radius: 15px;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .size-option:hover {
-            background: #f0f0f0;
-            border-color: #d4af37;
-            transform: translateY(-2px);
-        }
-        
-        .size-label {
-            font-size: 1.1em;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .size-price {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8em;
-            font-weight: 700;
-            color: #d4af37;
-        }
-        
-        .regular-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px 35px;
-            background: #ffffff;
-            border-radius: 15px;
-            border-left: 4px solid #d4af37;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-            transition: all 0.3s ease;
-        }
-        
-        .regular-item:hover {
-            transform: translateX(8px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-        }
-        
-        .item-info {
-            flex: 1;
-        }
-        
-        .item-name {
-            font-size: 1.4em;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 8px;
-            letter-spacing: -0.3px;
-        }
-        
-        .item-description {
-            color: #666;
-            font-size: 0.95em;
-            margin-bottom: 5px;
-            line-height: 1.5;
-        }
-        
-        .item-size {
-            color: #d4af37;
-            font-weight: 500;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .item-price {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6em;
-            font-weight: 700;
-            color: #d4af37;
-            margin-left: 30px;
-            text-align: right;
-        }
-        
-        .premium-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #d4af37, #f4e4bc);
-            color: #1a1a1a;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75em;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-left: 10px;
-        }
-        
-        .category-beverages .regular-item {
-            border-left-color: #2c5aa0;
-        }
-        
-        .category-appetizers .regular-item {
-            border-left-color: #8b4513;
-        }
-        
-        .category-sides .regular-item {
-            border-left-color: #228b22;
-        }
-        
-        .category-desserts .regular-item {
-            border-left-color: #dc143c;
-        }
-        
-        .footer {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: #ffffff;
-            text-align: center;
-            padding: 25px;
-            position: relative;
-        }
-        
-        .footer-content {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .footer h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8em;
-            color: #d4af37;
-            margin-bottom: 20px;
-        }
-        
-        .footer p {
-            margin: 10px 0;
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-        
-        .quality-statement {
-            background: linear-gradient(135deg, #f8f8f8, #ffffff);
-            padding: 30px;
-            text-align: center;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .quality-statement h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6em;
-            color: #1a1a1a;
-            margin-bottom: 15px;
-        }
-        
-        .quality-statement p {
-            color: #666;
-            font-size: 1.05em;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.7;
-        }
-        
-        @media print {
-            body { background: white; }
-            .container { box-shadow: none; }
-            .pizza-item:hover, .regular-item:hover, .size-option:hover { transform: none; }
-            
-            /* Forçar quebra de página APENAS antes de cada categoria */
-            .page-break {
-                page-break-before: always;
-                break-before: page;
-            }
-            
-            /* Primeira categoria não quebra */
-            .category:first-child {
-                page-break-before: auto;
-                break-before: auto;
-            }
-            
-            /* NUNCA quebrar dentro de uma categoria */
-            .category {
-                page-break-inside: avoid;
-                break-inside: avoid;
-            }
-            
-            /* Permitir quebra DENTRO dos itens se necessário, mas evitar */
-            .pizza-item {
-                page-break-inside: avoid;
-                break-inside: avoid;
-                margin-bottom: 15px;
-            }
-            
-            .regular-item {
-                page-break-inside: avoid;
-                break-inside: avoid;
-                margin-bottom: 10px;
-            }
-            
-            /* Manter título e subtítulo da categoria juntos */
-            .category-title {
-                page-break-after: avoid;
-                break-after: avoid;
-            }
-            
-            .category-subtitle {
-                page-break-after: avoid;
-                break-after: avoid;
-                margin-bottom: 15px;
-            }
-            
-            /* Manter header da pizza com as opções */
-            .pizza-header {
-                page-break-after: avoid;
-                break-after: avoid;
-            }
-            
-            /* Compactar para caber mais na página */
-            .menu-content {
-                padding: 15px;
-                padding-bottom: 5px;
-            }
-            
-            .category {
-                margin-bottom: 10px;
-            }
-            
-            .items-grid {
-                gap: 10px;
-            }
-            
-            .pizza-item {
-                padding: 20px;
-            }
-            
-            .pizza-header {
-                margin-bottom: 15px;
-            }
-            
-            .regular-item {
-                padding: 20px 25px;
-            }
-            
-            /* Garantir que o footer fique na última página */
-            .footer {
-                page-break-before: avoid !important;
-                break-before: avoid !important;
-                padding: 15px !important;
-                margin-top: 5px !important;
-            }
-            
-            .footer h3 {
-                font-size: 1.4em !important;
-                margin-bottom: 10px !important;
-            }
-            
-            .footer p {
-                margin: 5px 0 !important;
-                font-size: 0.95em !important;
-            }
-            
-            /* Compactar categorias menores para caber mais */
-            .category-sides, .category-desserts {
-                margin-bottom: 8px !important;
-            }
-            
-            .category-sides .category-title,
-            .category-desserts .category-title {
-                font-size: 1.9em !important;
-                margin-bottom: 5px !important;
-            }
-            
-            .category-sides .category-subtitle,
-            .category-desserts .category-subtitle {
-                margin-bottom: 8px !important;
-                font-size: 0.9em !important;
-            }
-            
-            .category-sides .regular-item,
-            .category-desserts .regular-item {
-                padding: 12px 15px !important;
-                margin-bottom: 3px !important;
-            }
-            
-            .category-sides .items-grid,
-            .category-desserts .items-grid {
-                gap: 5px !important;
-            }
-            .category:last-child {
-                margin-bottom: 0px !important;
-            }
-            
-            .category:last-child .items-grid {
-                gap: 5px !important;
-            }
-            
-            .category:last-child .regular-item {
-                padding: 12px 15px !important;
-                margin-bottom: 3px !important;
-            }
-            
-            .category:last-child .category-title {
-                font-size: 1.8em !important;
-                margin-bottom: 5px !important;
-            }
-            
-            .category:last-child .category-subtitle {
-                margin-bottom: 10px !important;
-                font-size: 0.9em !important;
-            }
-            
-            /* Ajustar fontes para impressão */
-            .category-title {
-                font-size: 2.2em;
-                margin-bottom: 10px;
-            }
-            
-            .pizza-name {
-                font-size: 1.8em;
-            }
-            
-            .item-name {
-                font-size: 1.2em;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .header { padding: 60px 30px; }
-            .header h1 { font-size: 3em; }
-            .menu-content { padding: 40px 30px; }
-            .pizza-sizes { grid-template-columns: 1fr; }
-            .category-title { font-size: 2.2em; }
-        }
-    </style>
+    .product-card {
+        flex-direction: column;
+        gap: 15px;
+        min-height: auto;
+    }
+    
+    .product-image {
+        width: 100%;
+        height: 180px;
+    }
+    
+    .product-footer {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .product-sizes {
+        justify-content: center;
+    }
+    
+    .nav-content {
+        padding: 0 10px;
+    }
+    
+    .nav-item {
+        font-size: 0.9em;
+        padding: 10px 15px;
+    }
+    
+    .modal-content {
+        margin: 10px;
+        max-height: 85vh;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        transform: translateY(-120%);
+    }
+    
+    .notification.show {
+        transform: translateY(0);
+    }
+}
+.demo-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #1a1a1a, #333);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.85em;
+    z-index: 1000;
+    border-top: 2px solid var(--primary-color);
+}
+
+.demo-banner a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.demo-banner a:hover {
+    text-decoration: underline;
+}
+
+.demo-badge {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+    margin-top: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    font-family: 'Inter', sans-serif;
+}
+
+.demo-badge:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+}
+
+.demo-badge h4 {
+    font-size: 0.9em;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.demo-badge p {
+    font-size: 0.8em;
+    margin-bottom: 12px;
+    opacity: 0.95;
+    line-height: 1.4;
+}
+
+.demo-badge .cta-text {
+    font-size: 0.85em;
+    font-weight: 600;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+
+
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="header-content">
-                <h1>BELLA VISTA</h1>
-                <p class="tagline">Culinária Italiana Artesanal</p>
-            </div>
+
+
+<div class="header">
+<div class="header-content">
+    <div class="logo">
+        <h1>BELLA VISTA</h1>
+        <p>Culinária Italiana Artesanal</p>
+    </div>
+    <div class="header-info">
+        <div class="status-indicator">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">Aberto agora</span>
         </div>
-        
-        <div class="quality-statement">
-            <h3>Experiência Gastronômica Autêntica</h3>
-            <p>Utilizamos apenas ingredientes premium importados da Itália, massas artesanais fermentadas por 48 horas e queijos selecionados de produtores locais. Cada prato é uma celebração da tradição culinária italiana.</p>
-        </div>
-        
-        <div class="menu-content">
-            <!-- PIZZAS ARTESANAIS -->
-            <div class="category">
-                <h2 class="category-title">Pizzas Artesanais</h2>
-                <p class="category-subtitle">Massa fermentada por 48 horas • Forno à lenha • Ingredientes premium</p>
-                <div class="items-grid">
-                    
-                    <!-- Margherita -->
-                    <div class="pizza-item">
-                        <div class="pizza-header">
-                            <div class="pizza-name">Margherita Clássica</div>
-                            <div class="pizza-description">Molho San Marzano, mussarela di bufala, manjericão fresco e azeite extra virgem</div>
-                        </div>
-                        <div class="pizza-sizes">
-                            <div class="size-option">
-                                <div class="size-label">Individual</div>
-                                <div class="size-price">R$ 58</div>
-                            </div>
-                            <div class="size-option">
-                                <div class="size-label">Grande</div>
-                                <div class="size-price">R$ 78</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Calabresa Gourmet -->
-                    <div class="pizza-item">
-                        <div class="pizza-header">
-                            <div class="pizza-name">Calabresa Nobile</div>
-                            <div class="pizza-description">Molho San Marzano, mussarela di bufala, calabresa artesanal defumada e cebola roxa</div>
-                        </div>
-                        <div class="pizza-sizes">
-                            <div class="size-option">
-                                <div class="size-label">Individual</div>
-                                <div class="size-price">R$ 68</div>
-                            </div>
-                            <div class="size-option">
-                                <div class="size-label">Grande</div>
-                                <div class="size-price">R$ 88</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Mussarela Premium -->
-                    <div class="pizza-item">
-                        <div class="pizza-header">
-                            <div class="pizza-name">Mussarela di Bufala</div>
-                            <div class="pizza-description">Molho San Marzano e autêntica mussarela di bufala campana DOP</div>
-                        </div>
-                        <div class="pizza-sizes">
-                            <div class="size-option">
-                                <div class="size-label">Individual</div>
-                                <div class="size-price">R$ 54</div>
-                            </div>
-                            <div class="size-option">
-                                <div class="size-label">Grande</div>
-                                <div class="size-price">R$ 72</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Frango Premium -->
-                    <div class="pizza-item">
-                        <div class="pizza-header">
-                            <div class="pizza-name">Frango al Catupiry <span class="premium-badge">Premium</span></div>
-                            <div class="pizza-description">Molho San Marzano, mussarela di bufala, frango orgânico desfiado e catupiry artesanal</div>
-                        </div>
-                        <div class="pizza-sizes">
-                            <div class="size-option">
-                                <div class="size-label">Individual</div>
-                                <div class="size-price">R$ 78</div>
-                            </div>
-                            <div class="size-option">
-                                <div class="size-label">Grande</div>
-                                <div class="size-price">R$ 98</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Portuguesa Gourmet -->
-                    <div class="pizza-item">
-                        <div class="pizza-header">
-                            <div class="pizza-name">Portuguesa Tradizionale</div>
-                            <div class="pizza-description">Mussarela di bufala, presunto de Parma, ovos caipira, cebola roxa, azeitonas Kalamata e orégano siciliano</div>
-                        </div>
-                        <div class="pizza-sizes">
-                            <div class="size-option">
-                                <div class="size-label">Individual</div>
-                                <div class="size-price">R$ 34</div>
-                            </div>
-                            <div class="size-option">
-                                <div class="size-label">Grande</div>
-                                <div class="size-price">R$ 42</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Pepperoni Premium -->
-                    <div class="pizza-item">
-                        <div class="pizza-header">
-                            <div class="pizza-name">Pepperoni Piccante</div>
-                            <div class="pizza-description">Molho San Marzano, mussarela di bufala e pepperoni artesanal importado</div>
-                        </div>
-                        <div class="pizza-sizes">
-                            <div class="size-option">
-                                <div class="size-label">Individual</div>
-                                <div class="size-price">R$ 33</div>
-                            </div>
-                            <div class="size-option">
-                                <div class="size-label">Grande</div>
-                                <div class="size-price">R$ 41</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- 4 Queijos Gourmet -->
-                    <div class="pizza-item">
-                        <div class="pizza-header">
-                            <div class="pizza-name">Quattro Formaggi <span class="premium-badge">Signature</span></div>
-                            <div class="pizza-description">Mussarela di bufala, provolone stagionato, parmigiano reggiano DOP e catupiry artesanal</div>
-                        </div>
-                        <div class="pizza-sizes">
-                            <div class="size-option">
-                                <div class="size-label">Individual</div>
-                                <div class="size-price">R$ 36</div>
-                            </div>
-                            <div class="size-option">
-                                <div class="size-label">Grande</div>
-                                <div class="size-price">R$ 45</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Vegetariana Premium -->
-                    <div class="pizza-item">
-                        <div class="pizza-header">
-                            <div class="pizza-name">Vegetariana del Giardino</div>
-                            <div class="pizza-description">Molho San Marzano, mussarela di bufala, tomate cereja, pimentão orgânico, cebola roxa e azeitonas Kalamata</div>
-                        </div>
-                        <div class="pizza-sizes">
-                            <div class="size-option">
-                                <div class="size-label">Individual</div>
-                                <div class="size-price">R$ 31</div>
-                            </div>
-                            <div class="size-option">
-                                <div class="size-label">Grande</div>
-                                <div class="size-price">R$ 39</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- BEBIDAS SELECIONADAS -->
-            <div class="category category-beverages page-break">
-                <h2 class="category-title">Bebidas Selecionadas</h2>
-                <p class="category-subtitle">Seleção premium para harmonizar perfeitamente</p>
-                <div class="items-grid">
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Coca-Cola Original</div>
-                            <div class="item-size">350ml • Gelada</div>
-                        </div>
-                        <div class="item-price">R$ 12</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Coca-Cola Família</div>
-                            <div class="item-size">2L • Para compartilhar</div>
-                        </div>
-                        <div class="item-price">R$ 28</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Pepsi Premium</div>
-                            <div class="item-size">350ml • Gelada</div>
-                        </div>
-                        <div class="item-price">R$ 10</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Pepsi Família</div>
-                            <div class="item-size">2L • Para compartilhar</div>
-                        </div>
-                        <div class="item-price">R$ 24</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Guaraná Antarctica</div>
-                            <div class="item-size">350ml • Sabor brasileiro</div>
-                        </div>
-                        <div class="item-price">R$ 10</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Guaraná Família</div>
-                            <div class="item-size">2L • Tradição brasileira</div>
-                        </div>
-                        <div class="item-price">R$ 24</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Sprite Limão</div>
-                            <div class="item-size">350ml • Refrescante</div>
-                        </div>
-                        <div class="item-price">R$ 10</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Sprite Família</div>
-                            <div class="item-size">2L • Refrescância garantida</div>
-                        </div>
-                        <div class="item-price">R$ 24</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Água Mineral Premium</div>
-                            <div class="item-size">500ml • Pura e cristalina</div>
-                        </div>
-                        <div class="item-price">R$ 8</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Suco de Laranja Natural <span class="premium-badge">Fresh</span></div>
-                            <div class="item-size">300ml • Espremido na hora</div>
-                        </div>
-                        <div class="item-price">R$ 18</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Suco de Limão Natural <span class="premium-badge">Fresh</span></div>
-                            <div class="item-size">300ml • Espremido na hora</div>
-                        </div>
-                        <div class="item-price">R$ 16</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Heineken Original <span class="premium-badge">Import</span></div>
-                            <div class="item-size">330ml • Cerveja premium</div>
-                        </div>
-                        <div class="item-price">R$ 18</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Skol Gelada</div>
-                            <div class="item-size">350ml • Sabor brasileiro</div>
-                        </div>
-                        <div class="item-price">R$ 9</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Brahma Original</div>
-                            <div class="item-size">350ml • Tradição nacional</div>
-                        </div>
-                        <div class="item-price">R$ 9</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- ENTRADAS ARTESANAIS -->
-            <div class="category category-appetizers">
-                <h2 class="category-title">Entradas Artesanais</h2>
-                <p class="category-subtitle">Preparadas no momento • Receitas tradicionais</p>
-                <div class="items-grid">
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Esfiha de Carne Nobre</div>
-                            <div class="item-description">Massa árabe tradicional com carne bovina temperada com especiarias</div>
-                            <div class="item-size">Unidade</div>
-                        </div>
-                        <div class="item-price">R$ 12</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Esfiha de Frango Orgânico</div>
-                            <div class="item-description">Massa árabe tradicional com frango orgânico temperado</div>
-                            <div class="item-size">Unidade</div>
-                        </div>
-                        <div class="item-price">R$ 12</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Esfiha de Queijo Artesanal</div>
-                            <div class="item-description">Massa árabe tradicional com queijo minas artesanal</div>
-                            <div class="item-size">Unidade</div>
-                        </div>
-                        <div class="item-price">R$ 10</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Coxinha Gourmet de Frango</div>
-                            <div class="item-description">Salgado artesanal com frango desfiado e catupiry</div>
-                            <div class="item-size">Unidade</div>
-                        </div>
-                        <div class="item-price">R$ 14</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- ACOMPANHAMENTOS ESPECIAIS -->
-            <div class="category category-sides page-break">
-                <h2 class="category-title">Acompanhamentos Especiais</h2>
-                <p class="category-subtitle">Complementos perfeitos • Preparados com carinho</p>
-                <div class="items-grid">
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Pão de Alho Artesanal</div>
-                            <div class="item-description">Pão francês com manteiga de alho fresco e ervas</div>
-                            <div class="item-size">8 unidades</div>
-                        </div>
-                        <div class="item-price">R$ 28</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Batata Frita Premium</div>
-                            <div class="item-description">Batatas selecionadas com tempero especial da casa</div>
-                            <div class="item-size">Porção Individual</div>
-                        </div>
-                        <div class="item-price">R$ 32</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Batata Frita Grande</div>
-                            <div class="item-description">Porção generosa com tempero especial da casa</div>
-                            <div class="item-size">Para compartilhar</div>
-                        </div>
-                        <div class="item-price">R$ 58</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Salada Verde Orgânica</div>
-                            <div class="item-description">Mix de folhas orgânicas, tomate cereja e cebola roxa</div>
-                            <div class="item-size">Porção</div>
-                        </div>
-                        <div class="item-price">R$ 26</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- SOBREMESAS ARTESANAIS -->
-            <div class="category category-desserts">
-                <h2 class="category-title">Sobremesas Artesanais</h2>
-                <p class="category-subtitle">Doces momentos • Receitas tradicionais</p>
-                <div class="items-grid">
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Pudim de Leite Tradicional</div>
-                            <div class="item-description">Sobremesa clássica com leite condensado e calda de caramelo</div>
-                            <div class="item-size">Fatia generosa</div>
-                        </div>
-                        <div class="item-price">R$ 18</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Brigadeiro Gourmet <span class="premium-badge">Artesanal</span></div>
-                            <div class="item-description">Doce premium de chocolate belga com granulado especial</div>
-                            <div class="item-size">Unidade</div>
-                        </div>
-                        <div class="item-price">R$ 8</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Açaí Premium <span class="premium-badge">Orgânico</span></div>
-                            <div class="item-description">Açaí orgânico com granola artesanal e banana</div>
-                            <div class="item-size">300ml</div>
-                        </div>
-                        <div class="item-price">R$ 28</div>
-                    </div>
-                    
-                    <div class="regular-item">
-                        <div class="item-info">
-                            <div class="item-name">Sorvete Artesanal de Chocolate</div>
-                            <div class="item-description">Sorvete cremoso de chocolate belga produzido na casa</div>
-                            <div class="item-size">2 bolas</div>
-                        </div>
-                        <div class="item-price">R$ 22</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <div class="footer-content">
-                <h3>Reservas & Delivery Premium</h3>
-                <p>📱 WhatsApp: +55 16 98813-5564</p>
-                <p>🚚 Delivery em toda a região</p>
-                <p>⏰ Funcionamento: Ter-Dom • 18h às 23h</p>
-                <p style="margin-top: 20px; font-style: italic; opacity: 0.8;">
-                    "Cada prato é uma obra de arte culinária, preparada com ingredientes selecionados e muito amor."
-                </p>
-            </div>
+        <div>Delivery: R$ 10,00</div>
+        <div>📞 (16) 98813-5564</div>
+    </div>
+</div>
+</div>
+
+<div class="nav-categories">
+<div class="nav-content">
+    <div class="nav-item active" data-category="todos">Todos</div>
+    <div class="nav-item" data-category="pizzas">Pizzas</div>
+    <div class="nav-item" data-category="bebidas">Bebidas</div>
+    <div class="nav-item" data-category="salgados">Salgados</div>
+    <div class="nav-item" data-category="acompanhamentos">Acompanhamentos</div>
+    <div class="nav-item" data-category="sobremesas">Sobremesas</div>
+</div>
+</div>
+
+<div class="main-content">
+<div class="products-section">
+    <div class="category-section" id="todos">
+        <h2 class="category-title">Todos os Produtos</h2>
+        <div class="products-grid"></div>
+    </div>
+    
+    <div class="category-section" id="pizzas" style="display: none;">
+        <h2 class="category-title">Pizzas Artesanais</h2>
+        <div class="products-grid"></div>
+    </div>
+
+    <div class="category-section" id="bebidas" style="display: none;">
+        <h2 class="category-title">Bebidas Selecionadas</h2>
+        <div class="products-grid"></div>
+    </div>
+    
+    <div class="category-section" id="salgados" style="display: none;">
+        <h2 class="category-title">Salgados Artesanais</h2>
+        <div class="products-grid"></div>
+    </div>
+    
+    <div class="category-section" id="acompanhamentos" style="display: none;">
+        <h2 class="category-title">Acompanhamentos Especiais</h2>
+        <div class="products-grid"></div>
+    </div>
+    
+    <div class="category-section" id="sobremesas" style="display: none;">
+        <h2 class="category-title">Sobremesas Artesanais</h2>
+        <div class="products-grid"></div>
+    </div>
+</div>
+
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+        <h3 class="cart-title">Seu Pedido</h3>
+        <span class="cart-count" id="cartCount">0</span>
+    </div>
+    
+    <div class="cart-items" id="cartItems">
+        <div class="empty-cart">
+            <div class="empty-cart-icon">🛒</div>
+            <p>Seu carrinho está vazio</p>
+            <small>Adicione alguns itens deliciosos!</small>
         </div>
     </div>
     
-    <script>
-        // Funcionalidade de impressão otimizada
-        window.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.key === 'p') {
-                window.print();
-            }
+    <div class="cart-summary" id="cartSummary" style="display: none;">
+        <div class="summary-line">
+            <span>Subtotal:</span>
+            <span id="subtotal">R$ 0,00</span>
+        </div>
+        <div class="summary-line">
+            <span>Taxa de Entrega:</span>
+            <span>R$ 10,00</span>
+        </div>
+        <div class="summary-line summary-total">
+            <span>Total:</span>
+            <span id="total">R$ 10,00</span>
+        </div>
+        
+        <button class="checkout-btn" id="checkoutBtn" disabled>
+            Finalizar Pedido
+        </button>
+    </div>
+    <div class="demo-badge" onclick="window.open('https://maximiza.ai', '_blank')">
+        <h4>🚀 PROJETO DEMONSTRATIVO</h4>
+        <p>Quer um site assim no seu bar ou restaurante?</p>
+        <div class="cta-text">👆 Clique aqui - maximiza.AI</div>
+    </div>
+</div>
+</div>
+
+<div class="notification" id="notification"></div>
+
+
+
+<!-- MODAL CHECKOUT -->
+<div class="modal-overlay" id="checkoutModal">
+<div class="modal-content">
+    <div class="modal-header">
+        <h3 class="modal-title">Finalizar Pedido</h3>
+        <button class="close-modal" id="closeModal">&times;</button>
+    </div>
+    
+    <div class="modal-body">
+        <form id="checkoutForm">
+            <!-- Resumo do Pedido -->
+            <div class="form-section">
+                <h3>Resumo do Pedido</h3>
+                <div class="order-summary" id="orderSummaryModal">
+                    <!-- Será preenchido via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Dados Pessoais -->
+            <div class="form-section">
+                <h3>Seus Dados</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customerName">Nome Completo *</label>
+                        <input type="text" id="customerName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerPhone">Telefone *</label>
+                        <input type="tel" id="customerPhone" class="form-control" required placeholder="(16) 99999-9999">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="customerEmail">E-mail</label>
+                    <input type="email" id="customerEmail" class="form-control" placeholder="seuemail@exemplo.com">
+                </div>
+            </div>
+
+            <!-- Endereço -->
+            <div class="form-section">
+                <h3>Endereço de Entrega</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cep">CEP *</label>
+                        <input type="text" id="cep" class="form-control" required placeholder="00000-000">
+                    </div>
+                    <div class="form-group">
+                        <label for="street">Rua *</label>
+                        <input type="text" id="street" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="number">Número *</label>
+                        <input type="text" id="number" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="complement">Complemento</label>
+                        <input type="text" id="complement" class="form-control" placeholder="Apto, Bloco, etc.">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="neighborhood">Bairro *</label>
+                        <input type="text" id="neighborhood" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Cidade *</label>
+                        <input type="text" id="city" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forma de Pagamento -->
+            <div class="form-section">
+                <h3>Forma de Pagamento</h3>
+                <div class="payment-options">
+                    <div class="payment-option" data-payment="card">
+                        <input type="radio" name="payment" value="card" id="paymentCard">
+                        <label for="paymentCard">Cartão (Crédito/Débito) - Na entrega</label>
+                    </div>
+                    <div class="payment-option" data-payment="cash">
+                        <input type="radio" name="payment" value="cash" id="paymentCash">
+                        <label for="paymentCash">Dinheiro - Na entrega</label>
+                    </div>
+                    <div class="payment-option" data-payment="pix">
+                        <input type="radio" name="payment" value="pix" id="paymentPix">
+                        <label for="paymentPix">PIX</label>
+                    </div>
+                </div>
+                
+                <!-- Detalhes do Pagamento em Dinheiro -->
+                <div class="payment-details" id="cashDetails">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="needChange"> Preciso de troco
+                        </label>
+                    </div>
+                    <div class="form-group" id="changeAmount" style="display: none;">
+                        <label for="changeFor">Troco para quanto?</label>
+                        <input type="number" id="changeFor" class="form-control" placeholder="Ex: 100" step="0.01">
+                    </div>
+                </div>
+                
+                <!-- Detalhes do PIX -->
+                <div class="payment-details" id="pixDetails">
+                    <div class="pix-info">
+                        <strong>Informações do PIX:</strong>
+                        <div class="pix-key">Chave PIX: bellavista@pix.com.br</div>
+                        <p><strong>Importante:</strong> Após realizar o pagamento, envie o comprovante via WhatsApp para confirmar seu pedido.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Observações -->
+            <div class="form-section">
+                <h3>Observações</h3>
+                <div class="form-group">
+                    <label for="observations">Observações Especiais</label>
+                    <textarea id="observations" class="form-control" rows="3" placeholder="Alguma observação especial para seu pedido?"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-order">
+                Enviar Pedido via WhatsApp
+            </button>
+        </form>
+    </div>
+</div>
+</div>
+
+<script>
+// CONFIGURAÇÕES
+const CONFIG = {
+    RESTAURANT_PHONE: "5516988135564",
+    PIX_KEY: "bellavista@pix.com.br",
+    DELIVERY_FEE: 10.00,
+    OPENING_HOURS: {
+        seg: { open: "00:01", close: "23:59" },
+        ter: { open: "00:01", close: "23:59" },
+        qua: { open: "00:01", close: "23:59" },
+        qui: { open: "00:01", close: "23:59" },
+        sex: { open: "00:01", close: "23:59" },
+        sab: { open: "00:01", close: "23:59" },
+        dom: { open: "00:01", close: "22:59" }
+    }
+};
+
+// DADOS DOS PRODUTOS
+const PRODUCTS = {
+    pizzas: [
+        {
+            id: "margherita",
+            name: "Margherita Clássica",
+            description: "Molho San Marzano, mussarela di bufala, manjericão fresco e azeite extra virgem",
+            image: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=400&fit=crop&crop=center",
+            sizes: [
+                { label: "Individual", price: 58 },
+                { label: "Famiglia", price: 78 }
+            ]
+        },
+        {
+            id: "calabresa",
+            name: "Calabresa Nobile",
+            description: "Molho San Marzano, mussarela di bufala, calabresa artesanal defumada e cebola roxa",
+            image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=400&fit=crop&crop=center",
+            sizes: [
+                { label: "Individual", price: 68 },
+                { label: "Famiglia", price: 88 }
+            ]
+        },
+        {
+            id: "mussarela",
+            name: "Mussarela di Bufala",
+            description: "Molho San Marzano e autêntica mussarela di bufala campana DOP",
+            image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=400&fit=crop&crop=center",
+            sizes: [
+                { label: "Individual", price: 54 },
+                { label: "Famiglia", price: 72 }
+            ]
+        },
+        {
+            id: "frango",
+            name: "Frango al Catupiry",
+            description: "Molho San Marzano, mussarela di bufala, frango orgânico desfiado e catupiry artesanal",
+            image: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=400&h=400&fit=crop&crop=center",
+            sizes: [
+                { label: "Individual", price: 78 },
+                { label: "Famiglia", price: 98 }
+            ]
+        },
+        {
+            id: "portuguesa",
+            name: "Portuguesa Tradizionale",
+            description: "Mussarela di bufala, presunto de Parma, ovos caipira, cebola roxa, azeitonas Kalamata e orégano siciliano",
+            image: "https://images.unsplash.com/photo-1595708684082-a173bb3a06c5?w=400&h=400&fit=crop&crop=center",
+            sizes: [
+                { label: "Individual", price: 84 },
+                { label: "Famiglia", price: 108 }
+            ]
+        },
+        {
+            id: "pepperoni",
+            name: "Pepperoni Piccante",
+            description: "Molho San Marzano, mussarela di bufala e pepperoni artesanal importado",
+            image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=400&fit=crop&crop=center",
+            sizes: [
+                { label: "Individual", price: 74 },
+                { label: "Famiglia", price: 94 }
+            ]
+        },
+        {
+            id: "quattro-formaggi",
+            name: "Quattro Formaggi",
+            description: "Mussarela di bufala, provolone stagionato, parmigiano reggiano DOP e catupiry artesanal",
+            image: "https://images.pexels.com/photos/32318594/pexels-photo-32318594.jpeg?w=400&h=400&fit=crop&crop=center",
+            sizes: [
+                { label: "Individual", price: 88 },
+                { label: "Famiglia", price: 118 }
+            ]
+        },
+        {
+            id: "vegetariana",
+            name: "Vegetariana del Giardino",
+            description: "Molho San Marzano, mussarela di bufala, tomate cereja, pimentão orgânico, cebola roxa e azeitonas Kalamata",
+            image: "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=400&h=400&fit=crop&crop=center",
+            sizes: [
+                { label: "Individual", price: 72 },
+                { label: "Famiglia", price: 92 }
+            ]
+        }
+    ],
+    bebidas: [
+        {
+            id: "coca-cola",
+            name: "Coca-Cola Original",
+            description: "Refrigerante de cola gelado",
+            image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "350ml", price: 12 }]
+        },
+        {
+            id: "coca-cola-2l",
+            name: "Coca-Cola Família",
+            description: "Refrigerante de cola 2 litros para compartilhar",
+            image: "https://images.unsplash.com/photo-1732031750172-1600351813d0?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "2L", price: 28 }]
+        },
+        {
+            id: "pepsi",
+            name: "Pepsi Premium",
+            description: "Refrigerante de cola gelado",
+            image: "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "350ml", price: 10 }]
+        },
+        {
+            id: "pepsi-2l",
+            name: "Pepsi Família",
+            description: "Refrigerante de cola 2 litros para compartilhar",
+            image: "https://images.pexels.com/photos/9737410/pexels-photo-9737410.jpeg?w=400&h=400&fit=crop&crop=bottom",
+            sizes: [{ label: "2L", price: 24 }]
+        },
+        {
+            id: "guarana",
+            name: "Guaraná Antarctica",
+            description: "Refrigerante de guaraná gelado",
+            image: "https://images.pexels.com/photos/32183186/pexels-photo-32183186.jpeg?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "350ml", price: 10 }]
+        },
+        {
+            id: "guarana-2l",
+            name: "Guaraná Família",
+            description: "Refrigerante de guaraná 2 litros tradição brasileira",
+            image: "https://www.guaranaantarctica.com.br/sites/g/files/wnfebl12341/files/styles/webp/public/Guaran%C3%A1/Style%20Guide/Guarana_2L.png.webp?itok=ckQ_wChn",
+            sizes: [{ label: "2L", price: 24 }]
+        },
+        {
+            id: "sprite",
+            name: "Sprite Limão",
+            description: "Refrigerante de limão gelado refrescante",
+            image: "https://images.unsplash.com/photo-1680404005217-a441afdefe83?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "350ml", price: 10 }]
+        },
+        {
+            id: "sprite-2l",
+            name: "Sprite Família",
+            description: "Refrigerante de limão 2 litros refrescância garantida",
+            image: "https://andinacocacola.vtexassets.com/arquivos/ids/157705-800-450?v=638405140541630000&width=800&height=450&aspect=true",
+            sizes: [{ label: "2L", price: 24 }]
+        },
+        {
+            id: "agua",
+            name: "Água Mineral Premium",
+            description: "Água mineral natural gelada pura e cristalina",
+            image: "https://images.unsplash.com/photo-1591656938066-cf1dfcb57661?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "500ml", price: 8 }]
+        },
+        {
+            id: "suco-laranja",
+            name: "Suco de Laranja Natural",
+            description: "Suco natural de laranja espremido na hora",
+            image: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "300ml", price: 18 }]
+        },
+        {
+            id: "suco-limao",
+            name: "Suco de Limão Natural",
+            description: "Suco natural de limão espremido na hora",
+            image: "https://images.unsplash.com/photo-1556881286-fc6915169721?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "300ml", price: 16 }]
+        },
+        {
+            id: "heineken",
+            name: "Heineken Original",
+            description: "Cerveja importada premium gelada",
+            image: "https://images.unsplash.com/photo-1588182030446-c3fae46fb125?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "330ml", price: 18 }]
+        },
+        {
+            id: "skol",
+            name: "Skol Gelada",
+            description: "Cerveja nacional gelada sabor brasileiro",
+            image: "https://mercantilatacado.vtexassets.com/arquivos/ids/168529/65391b486a2a15a1bb6c1b6c.jpg?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "350ml", price: 9 }]
+        },
+        {
+            id: "brahma",
+            name: "Brahma Original",
+            description: "Cerveja nacional gelada tradição nacional",
+            image: "https://images.pexels.com/photos/17409432/pexels-photo-17409432.jpeg?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "350ml", price: 9 }]
+        }
+    ],
+    salgados: [
+        {
+            id: "esfiha-carne",
+            name: "Esfiha de Carne Nobre",
+            description: "Massa árabe tradicional com carne bovina temperada com especiarias",
+            image: "https://app.nutrium.com/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBNTVwRVE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--00b16e6c0a03c510ea95da2bd4651ad9841b7e53/esfirra.jpg",
+            sizes: [{ label: "Unidade", price: 12 }]
+        },
+        {
+            id: "esfiha-frango",
+            name: "Esfiha de Frango Orgânico",
+            description: "Massa árabe tradicional com frango orgânico temperado",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_XCoKf3t9H-H9G2APdLU02cWAyWb5aFrc_Q&s",
+            sizes: [{ label: "Unidade", price: 12 }]
+        },
+        {
+            id: "esfiha-queijo",
+            name: "Esfiha de Queijo Artesanal",
+            description: "Massa árabe tradicional com queijo minas artesanal",
+            image: "https://imagem.band.com.br/12/f_355412.jpg",
+            sizes: [{ label: "Unidade", price: 10 }]
+        },
+        {
+            id: "coxinha",
+            name: "Coxinha Gourmet de Frango",
+            description: "Salgado artesanal com frango desfiado e catupiry",
+            image: "https://images.pexels.com/photos/17409458/pexels-photo-17409458.jpeg?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "Unidade", price: 14 }]
+        }
+    ],
+    acompanhamentos: [
+        {
+            id: "pao-alho",
+            name: "Pão de Alho Artesanal",
+            description: "Pão francês com manteiga de alho fresco e ervas",
+            image: "https://images.pexels.com/photos/9951852/pexels-photo-9951852.jpeg?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "8 unidades", price: 28 }]
+        },
+        {
+            id: "batata-frita",
+            name: "Batata Frita Premium",
+            description: "Batatas selecionadas com tempero especial da casa",
+            image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=400&fit=crop&crop=center",
+            sizes: [
+                { label: "Individual", price: 32 },
+                { label: "Famiglia", price: 58 }
+            ]
+        },
+        {
+            id: "salada-verde",
+            name: "Salada Verde Orgânica",
+            description: "Mix de folhas orgânicas, tomate cereja e cebola roxa",
+            image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "Porção", price: 26 }]
+        }
+    ],
+    sobremesas: [
+        {
+            id: "pudim",
+            name: "Pudim de Leite Tradicional",
+            description: "Sobremesa clássica com leite condensado e calda de caramelo",
+            image: "https://images.unsplash.com/photo-1637264596042-fcf205a81e1e?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "Fatia", price: 18 }]
+        },
+        {
+            id: "brigadeiro",
+            name: "Brigadeiro Gourmet",
+            description: "Doce premium de chocolate belga com granulado especial",
+            image: "https://images.unsplash.com/photo-1702982841001-f65535a5a40b?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "Unidade", price: 8 }]
+        },
+        {
+            id: "acai",
+            name: "Açaí Premium",
+            description: "Açaí orgânico com granola artesanal e banana",
+            image: "https://images.pexels.com/photos/7936988/pexels-photo-7936988.jpeg?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "300ml", price: 28 }]
+        },
+        {
+            id: "sorvete-chocolate",
+            name: "Sorvete Artesanal de Chocolate",
+            description: "Sorvete cremoso de chocolate belga produzido na casa",
+            image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=400&fit=crop&crop=center",
+            sizes: [{ label: "2 bolas", price: 22 }]
+        }
+    ]
+};
+
+// ESTADO GLOBAL
+let cart = [];
+let currentCategory = 'todos';
+
+// VERIFICAR SE ESTÁ ABERTO
+function isRestaurantOpen() {
+    const now = new Date();
+    const dayNames = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sab'];
+    const today = dayNames[now.getDay()];
+    const currentTime = now.getHours() * 100 + now.getMinutes();
+    
+    const schedule = CONFIG.OPENING_HOURS[today];
+    const openTime = parseInt(schedule.open.replace(':', ''));
+    const closeTime = parseInt(schedule.close.replace(':', ''));
+    
+    return currentTime >= openTime && currentTime <= closeTime;
+}
+
+// ATUALIZAR STATUS
+function updateRestaurantStatus() {
+    const isOpen = isRestaurantOpen();
+    const statusDot = document.getElementById('statusDot');
+    const statusText = document.getElementById('statusText');
+    
+    if (isOpen) {
+        statusDot.style.background = 'var(--success)';
+        statusText.textContent = 'Aberto agora';
+        statusDot.style.animation = 'pulse 2s infinite';
+        
+        // Habilitar funcionalidades
+        enableOrderingFunctions();
+    } else {
+        statusDot.style.background = 'var(--danger)';
+        statusText.textContent = 'Fechado';
+        statusDot.style.animation = 'none';
+        
+        // Desabilitar funcionalidades
+        disableOrderingFunctions();
+    }
+}
+
+// HABILITAR PEDIDOS
+function enableOrderingFunctions() {
+    const addButtons = document.querySelectorAll('.add-to-cart');
+    addButtons.forEach(btn => {
+        btn.style.opacity = '1';
+        btn.style.pointerEvents = 'all';
+    });
+    
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    if (checkoutBtn && cart.length > 0) {
+        checkoutBtn.disabled = false;
+    }
+}
+
+// DESABILITAR PEDIDOS
+function disableOrderingFunctions() {
+    const addButtons = document.querySelectorAll('.add-to-cart');
+    addButtons.forEach(btn => {
+        btn.style.opacity = '0.4';
+        btn.style.pointerEvents = 'none';
+        btn.classList.remove('active');
+        btn.disabled = true;
+    });
+    
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    if (checkoutBtn) {
+        checkoutBtn.disabled = true;
+    }
+    
+    const sizeOptions = document.querySelectorAll('.size-option');
+    sizeOptions.forEach(option => {
+        option.classList.remove('selected');
+    });
+    
+    cart = [];
+    updateCartUI();
+    
+    showNotification('Restaurante fechado. Horário: 18h às 23h', 'error');
+}
+
+// INICIALIZAÇÃO
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Sistema iniciado!');
+    updateRestaurantStatus();
+    renderProducts();
+    setupEvents();
+    
+    // Atualizar status a cada minuto
+    setInterval(updateRestaurantStatus, 60000);
+});
+
+// RENDERIZAR PRODUTOS
+function renderProducts() {
+    console.log('📦 Renderizando produtos...');
+    
+    // Renderizar categoria "todos"
+    const todosGrid = document.querySelector('#todos .products-grid');
+    if (todosGrid) {
+        todosGrid.innerHTML = '';
+        
+        Object.keys(PRODUCTS).forEach(category => {
+            PRODUCTS[category].forEach(product => {
+                const card = createProductCard(product);
+                todosGrid.appendChild(card);
+            });
         });
         
-        // Efeitos hover suaves
-        document.querySelectorAll('.size-option').forEach(option => {
-            option.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-3px) scale(1.02)';
+        console.log('✅ Produtos renderizados em "todos"');
+    }
+    
+    // Renderizar categorias individuais
+    Object.keys(PRODUCTS).forEach(category => {
+        const grid = document.querySelector(`#${category} .products-grid`);
+        if (grid) {
+            grid.innerHTML = '';
+            PRODUCTS[category].forEach(product => {
+                const card = createProductCard(product);
+                grid.appendChild(card);
+            });
+        }
+    });
+    
+    // ADICIONAR ESTAS LINHAS:
+    setTimeout(() => {
+        updateRestaurantStatus();
+    }, 100);
+}
+
+// CRIAR CARD DO PRODUTO
+function createProductCard(product) {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    
+    const sizesHTML = product.sizes.map(size => 
+        `<div class="size-option" data-size="${size.label}" data-price="${size.price}">
+            <span class="size-label">${size.label}</span>
+            <span class="size-price">R$ ${size.price}</span>
+        </div>`
+    ).join('');
+    
+    card.innerHTML = `
+        <div class="product-image" style="background-image: url('${product.image}')"></div>
+        <div class="product-info">
+            <div class="product-header">
+                <h3>${product.name}</h3>
+                <p class="product-description">${product.description}</p>
+            </div>
+            <div class="product-footer">
+                <div class="product-sizes">
+                    ${sizesHTML}
+                </div>
+                <button class="add-to-cart" disabled>
+                    <span>+</span> Adicionar
+                </button>
+            </div>
+        </div>
+    `;
+    
+    setupProductEvents(card, product);
+    return card;
+}
+
+// CONFIGURAR EVENTOS DO PRODUTO
+function setupProductEvents(card, product) {
+    const sizeOptions = card.querySelectorAll('.size-option');
+    const addButton = card.querySelector('.add-to-cart');
+    let selectedSize = null;
+    let selectedPrice = null;
+    
+    sizeOptions.forEach(option => {
+    option.addEventListener('click', function() {
+        // Verificar se está aberto PRIMEIRO
+        if (!isRestaurantOpen()) {
+            showNotification('Restaurante fechado! Horário de funcionamento: 18h às 23h', 'error');
+            return;
+        }
+        
+        sizeOptions.forEach(opt => opt.classList.remove('selected'));
+        this.classList.add('selected');
+        selectedSize = this.dataset.size;
+        selectedPrice = parseFloat(this.dataset.price);
+        addButton.disabled = false;
+        addButton.classList.add('active');
+    });
+});
+    
+    addButton.addEventListener('click', function() {
+        if (selectedSize && selectedPrice) {
+            addToCart(product, selectedSize, selectedPrice);
+            sizeOptions.forEach(opt => opt.classList.remove('selected'));
+            this.disabled = true;
+            this.classList.remove('active');
+            selectedSize = null;
+            selectedPrice = null;
+        }
+    });
+}
+
+// CONFIGURAR EVENTOS GLOBAIS
+function setupEvents() {
+    console.log('🎯 Configurando eventos...');
+    
+    // Navegação
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const category = this.dataset.category;
+            switchCategory(category);
+        });
+    });
+    
+    // Checkout
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', openCheckoutModal);
+    }
+    
+    // Modal
+    const closeModal = document.getElementById('closeModal');
+    if (closeModal) {
+        closeModal.addEventListener('click', closeCheckoutModal);
+    }
+    
+    const modal = document.getElementById('checkoutModal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) closeCheckoutModal();
+        });
+    }
+    
+    // Form
+    const form = document.getElementById('checkoutForm');
+    if (form) {
+        form.addEventListener('submit', submitOrder);
+    }
+    
+    // Pagamento
+    setupPaymentEvents();
+    
+    // CEP
+    setupCEPEvents();
+    
+    // Formatadores
+    setupFormatters();
+}
+
+// CONFIGURAR EVENTOS DE PAGAMENTO
+function setupPaymentEvents() {
+    const paymentOptions = document.querySelectorAll('.payment-option');
+    
+    paymentOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            paymentOptions.forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+            this.querySelector('input').checked = true;
+            
+            document.querySelectorAll('.payment-details').forEach(detail => {
+                detail.style.display = 'none';
             });
             
-            option.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
+            const paymentType = this.dataset.payment;
+            if (paymentType === 'cash') {
+                document.getElementById('cashDetails').style.display = 'block';
+            } else if (paymentType === 'pix') {
+                document.getElementById('pixDetails').style.display = 'block';
+            }
         });
-    </script>
+    });
+    
+    const needChange = document.getElementById('needChange');
+    if (needChange) {
+        needChange.addEventListener('change', function() {
+            const changeAmount = document.getElementById('changeAmount');
+            if (changeAmount) {
+                changeAmount.style.display = this.checked ? 'block' : 'none';
+            }
+        });
+    }
+}
+
+// CONFIGURAR EVENTOS CEP
+function setupCEPEvents() {
+    const cepInput = document.getElementById('cep');
+    if (cepInput) {
+        cepInput.addEventListener('blur', async function() {
+            const cep = this.value.replace(/\D/g, '');
+            
+            if (cep.length === 8) {
+                try {
+                    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                    const data = await response.json();
+                    
+                    if (!data.erro) {
+                        const street = document.getElementById('street');
+                        const neighborhood = document.getElementById('neighborhood');
+                        const city = document.getElementById('city');
+                        
+                        if (street) street.value = data.logradouro;
+                        if (neighborhood) neighborhood.value = data.bairro;
+                        if (city) city.value = data.localidade;
+                    }
+                } catch (error) {
+                    console.log('Erro ao buscar CEP:', error);
+                }
+            }
+        });
+    }
+}
+
+// CONFIGURAR FORMATADORES
+function setupFormatters() {
+    const phoneInput = document.getElementById('customerPhone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, '');
+            value = value.replace(/^(\d{2})(\d)/, '($1) $2');
+            value = value.replace(/(\d{5})(\d)/, '$1-$2');
+            this.value = value;
+        });
+    }
+    
+    const cepInput = document.getElementById('cep');
+    if (cepInput) {
+        cepInput.addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, '');
+            value = value.replace(/^(\d{5})(\d)/, '$1-$2');
+            this.value = value;
+        });
+    }
+}
+
+// TROCAR CATEGORIA
+function switchCategory(category) {
+    console.log('📂 Mudando para categoria:', category);
+    
+    // Atualizar navegação
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    document.querySelector(`[data-category="${category}"]`).classList.add('active');
+    
+    // Mostrar seção
+    document.querySelectorAll('.category-section').forEach(section => {
+        section.style.display = 'none';
+    });
+    document.getElementById(category).style.display = 'block';
+    
+    currentCategory = category;
+}
+
+// ADICIONAR AO CARRINHO
+function addToCart(product, size, price) {
+    const existingItem = cart.find(item => 
+        item.id === product.id && item.size === size
+    );
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            id: product.id,
+            name: product.name,
+            size: size,
+            price: price,
+            quantity: 1
+        });
+    }
+    
+    updateCartUI();
+    showNotification('Item adicionado ao carrinho!');
+}
+
+// ATUALIZAR UI DO CARRINHO
+function updateCartUI() {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const total = subtotal + CONFIG.DELIVERY_FEE;
+    
+    document.getElementById('cartCount').textContent = totalItems;
+    
+    const cartItems = document.getElementById('cartItems');
+    const cartSummary = document.getElementById('cartSummary');
+    
+    if (cart.length === 0) {
+        cartItems.innerHTML = `
+            <div class="empty-cart">
+                <div class="empty-cart-icon">🛒</div>
+                <p>Seu carrinho está vazio</p>
+                <small>Adicione alguns itens deliciosos!</small>
+            </div>
+        `;
+        cartSummary.style.display = 'none';
+    } else {
+        cartItems.innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <div class="cart-item-info">
+                    <div class="cart-item-name">${item.name}</div>
+                    <div class="cart-item-size">${item.size} - R$ ${item.price.toFixed(2)}</div>
+                </div>
+                <div class="cart-item-controls">
+                    <button class="quantity-btn" onclick="updateQuantity('${item.id}', '${item.size}', -1)">-</button>
+                    <span>${item.quantity}</span>
+                    <button class="quantity-btn" onclick="updateQuantity('${item.id}', '${item.size}', 1)">+</button>
+                </div>
+            </div>
+        `).join('');
+        
+        cartSummary.style.display = 'block';
+        document.getElementById('subtotal').textContent = `R$ ${subtotal.toFixed(2)}`;
+        document.getElementById('total').textContent = `R$ ${total.toFixed(2)}`;
+        
+        if (isRestaurantOpen()) {
+            document.getElementById('checkoutBtn').disabled = false;
+        } else {
+            document.getElementById('checkoutBtn').disabled = true;
+        }
+    }
+}
+
+// ATUALIZAR QUANTIDADE
+function updateQuantity(productId, size, delta) {
+    const item = cart.find(item => 
+        item.id === productId && item.size === size
+    );
+    
+    if (item) {
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+            const index = cart.findIndex(item => 
+                item.id === productId && item.size === size
+            );
+            cart.splice(index, 1);
+        }
+        updateCartUI();
+    }
+}
+
+// MOSTRAR NOTIFICAÇÃO
+function showNotification(message, type = 'success') {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.className = `notification ${type}`;
+    notification.classList.add('show');
+    
+    // Aumentar tempo para mensagens de erro (fechado)
+    const duration = type === 'error' ? 5000 : 2500;
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, duration);
+}
+
+// ABRIR MODAL CHECKOUT
+function openCheckoutModal() {
+    updateOrderSummary();
+    document.getElementById('checkoutModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+// FECHAR MODAL CHECKOUT
+function closeCheckoutModal() {
+    document.getElementById('checkoutModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// ATUALIZAR RESUMO DO PEDIDO
+function updateOrderSummary() {
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const total = subtotal + CONFIG.DELIVERY_FEE;
+    
+    const summaryHTML = `
+        ${cart.map(item => `
+            <div class="summary-item">
+                <span>${item.quantity}x ${item.name} (${item.size})</span>
+                <span>R$ ${(item.price * item.quantity).toFixed(2)}</span>
+            </div>
+        `).join('')}
+        <hr style="margin: 15px 0;">
+        <div class="summary-item">
+            <span>Subtotal:</span>
+            <span>R$ ${subtotal.toFixed(2)}</span>
+        </div>
+        <div class="summary-item">
+            <span>Taxa de Entrega:</span>
+            <span>R$ ${CONFIG.DELIVERY_FEE.toFixed(2)}</span>
+        </div>
+        <div class="summary-item" style="font-weight: 700; color: var(--primary-color);">
+            <span>Total:</span>
+            <span>R$ ${total.toFixed(2)}</span>
+        </div>
+    `;
+    
+    document.getElementById('orderSummaryModal').innerHTML = summaryHTML;
+}
+
+// ENVIAR PEDIDO
+function submitOrder(e) {
+    e.preventDefault();
+    
+    if (cart.length === 0) {
+        showNotification('Adicione itens ao carrinho primeiro!', 'error');
+        return;
+    }
+    
+    const formData = collectFormData();
+    
+    if (!validateFormData(formData)) {
+        return;
+    }
+    
+    const message = generateWhatsAppMessage(formData);
+    sendWhatsAppMessage(message);
+    
+    cart = [];
+    updateCartUI();
+    closeCheckoutModal();
+    
+    showNotification('Pedido enviado! Você será redirecionado para o WhatsApp.', 'success');
+}
+
+// COLETAR DADOS DO FORMULÁRIO
+function collectFormData() {
+    const paymentMethod = document.querySelector('input[name="payment"]:checked')?.value;
+    
+    return {
+        customer: {
+            name: document.getElementById('customerName').value,
+            phone: document.getElementById('customerPhone').value,
+            email: document.getElementById('customerEmail').value
+        },
+        address: {
+            cep: document.getElementById('cep').value,
+            street: document.getElementById('street').value,
+            number: document.getElementById('number').value,
+            complement: document.getElementById('complement').value,
+            neighborhood: document.getElementById('neighborhood').value,
+            city: document.getElementById('city').value
+        },
+        payment: {
+            method: paymentMethod,
+            needChange: document.getElementById('needChange')?.checked,
+            changeFor: document.getElementById('changeFor')?.value
+        },
+        observations: document.getElementById('observations').value
+    };
+}
+
+// VALIDAR DADOS DO FORMULÁRIO
+function validateFormData(data) {
+    if (!data.customer.name || !data.customer.phone) {
+        showNotification('Preencha nome e telefone!', 'error');
+        return false;
+    }
+    
+    if (!data.address.cep || !data.address.street || !data.address.number || !data.address.neighborhood) {
+        showNotification('Preencha o endereço completo!', 'error');
+        return false;
+    }
+    
+    if (!data.payment.method) {
+        showNotification('Selecione a forma de pagamento!', 'error');
+        return false;
+    }
+    
+    return true;
+}
+
+// GERAR MENSAGEM DO WHATSAPP
+function generateWhatsAppMessage(data) {
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const total = subtotal + CONFIG.DELIVERY_FEE;
+    
+    let message = `*NOVO PEDIDO - BELLA VISTA*\n\n`;
+    
+    message += `*CLIENTE:*\n`;
+    message += `Nome: ${data.customer.name}\n`;
+    message += `Telefone: ${data.customer.phone}\n`;
+    if (data.customer.email) {
+        message += `E-mail: ${data.customer.email}\n`;
+    }
+    message += `\n`;
+    
+    message += `*ENDEREÇO DE ENTREGA:*\n`;
+    message += `${data.address.street}, ${data.address.number}\n`;
+    if (data.address.complement) {
+        message += `${data.address.complement}\n`;
+    }
+    message += `${data.address.neighborhood} - ${data.address.city}\n`;
+    message += `CEP: ${data.address.cep}\n\n`;
+    
+    message += `*ITENS DO PEDIDO:*\n`;
+    cart.forEach(item => {
+        message += `• ${item.quantity}x ${item.name} (${item.size}) - R$ ${(item.price * item.quantity).toFixed(2)}\n`;
+    });
+    message += `\n`;
+    
+    message += `*VALORES:*\n`;
+    message += `Subtotal: R$ ${subtotal.toFixed(2)}\n`;
+    message += `Taxa de Entrega: R$ ${CONFIG.DELIVERY_FEE.toFixed(2)}\n`;
+    message += `*Total: R$ ${total.toFixed(2)}*\n\n`;
+    
+    message += `*PAGAMENTO:*\n`;
+    if (data.payment.method === 'card') {
+        message += `Cartão (Crédito/Débito) - Na entrega\n`;
+    } else if (data.payment.method === 'cash') {
+        message += `Dinheiro - Na entrega\n`;
+        if (data.payment.needChange) {
+            message += `Troco para: R$ ${data.payment.changeFor}\n`;
+        } else {
+            message += `Não precisa de troco\n`;
+        }
+    } else if (data.payment.method === 'pix') {
+        message += `PIX\n`;
+        message += `Chave: ${CONFIG.PIX_KEY}\n`;
+        message += `Aguardando comprovante\n`;
+    }
+    message += `\n`;
+    
+    if (data.observations) {
+        message += `*OBSERVAÇÕES:*\n${data.observations}\n\n`;
+    }
+    
+    message += `Pedido realizado em: ${new Date().toLocaleString('pt-BR')}\n`;
+    message += `\n*Obrigado pela preferência!*`;
+    
+    return message;
+}
+
+// ENVIAR MENSAGEM VIA WHATSAPP
+function sendWhatsAppMessage(message) {
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappURL = `https://wa.me/${CONFIG.RESTAURANT_PHONE}?text=${encodedMessage}`;
+    
+    window.open(whatsappURL, '_blank');
+}
+
+// Garantir que as funções estejam disponíveis globalmente
+window.updateQuantity = updateQuantity;
+window.addToCart = addToCart;
+</script>
+<div class="demo-banner">
+    🚀 <strong>PROJETO DEMONSTRATIVO</strong> - Desenvolvido pela <a href="https://maximiza.ai" target="_blank">maximiza.AI</a> para showcases de sistemas para bares e restaurantes. Clique <a href="https://maximiza.ai" target="_blank">AQUI</a> e acesse nosso site.
+</div>
+
 </body>
 </html>
